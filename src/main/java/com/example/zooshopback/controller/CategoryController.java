@@ -31,30 +31,19 @@ public class CategoryController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Category> findById(@PathVariable Long id) {
-        Category category =  categoryService.getCategory(id);
-        return category != null ?
-                new ResponseEntity<>(category, HttpStatus.OK)
-                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(categoryService.getCategory(id), HttpStatus.OK);
     }
 
     @PostMapping
     public ResponseEntity<Category> create(@RequestBody Category category) {
-        Category categoryServiceCategory = categoryService.createCategory(category);
-        return categoryServiceCategory != null ?
-                new ResponseEntity<>(categoryServiceCategory, HttpStatus.CREATED)
-                : new ResponseEntity<>(HttpStatus.CONFLICT);
+        return new ResponseEntity<>(categoryService.createCategory(category), HttpStatus.CREATED);
     }
 
     @PostMapping("/{id}/products")
-    public ResponseEntity<Product> addProduct(@PathVariable Long id, @RequestBody Product product) {
+    public ResponseEntity<?> addProduct(@PathVariable Long id, @RequestBody Product product) {
         Category category = categoryService.getCategory(id);
-        if (category == null)
-            return new ResponseEntity<>(HttpStatus.CONFLICT);
         product.setCategory(category);
-        product = productService.createProduct(product);
-        return product != null ?
-                new ResponseEntity<>(product, HttpStatus.CREATED)
-                : new ResponseEntity<>(HttpStatus.CONFLICT);
+        return new ResponseEntity<>(productService.createProduct(product), HttpStatus.CREATED);
     }
 
 }

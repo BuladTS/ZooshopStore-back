@@ -1,5 +1,7 @@
 package com.example.zooshopback.service;
 
+import com.example.zooshopback.exception.ResourceAlreadyExistsException;
+import com.example.zooshopback.exception.ResourceNotFoundException;
 import com.example.zooshopback.model.Category;
 import com.example.zooshopback.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,14 +25,15 @@ public class CategoryService {
     }
 
     public Category getCategory(Long id) {
-        Optional<Category> category = categoryRepository.findById(id);
-        return category.orElse(null);
+        return categoryRepository.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException("Could not find category with id: " + id)
+        );
     }
 
     public Category createCategory(Category category) {
         Optional<Category> categoryOptional = categoryRepository.findByName(category.getName());
         if (categoryOptional.isPresent())
-            throw new IllegalArgumentException("Category already exists");
+            throw new ResourceAlreadyExistsException("Category already exists with name: " + category.getName());
         categoryRepository.save(category);
         return category;
     }

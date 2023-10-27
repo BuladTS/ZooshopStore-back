@@ -35,17 +35,16 @@ public class Product {
     @OnDelete(action = OnDeleteAction.CASCADE)
 //    @JsonIgnoreProperties(value = {"applications", "hibernateLazyInitializer"})
     @JsonIgnore
+    @ToString.Exclude
     private Category category;
 
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "slug", nullable = false)
-    private String slug;
-
     @Column(name = "description", nullable = false, columnDefinition = "text")
     private String description;
 
+    // TODO: Сделать перевод из BigDecimal в money (тип данных postgresql) и обратно
     @Column(name = "price", nullable = false)
     private BigDecimal price;
 
@@ -57,10 +56,9 @@ public class Product {
     @ToString.Exclude
     private List<ProductImage> productImageList;
 
-    public Product(Category category, String name, String slug, String description, BigDecimal price, Integer quantity) {
+    public Product(Category category, String name, String description, BigDecimal price, Integer quantity) {
         this.category = category;
         this.name = name;
-        this.slug = slug;
         this.description = description;
         this.price = price;
         this.quantity = quantity;

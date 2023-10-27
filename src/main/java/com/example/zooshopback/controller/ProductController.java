@@ -1,21 +1,15 @@
 package com.example.zooshopback.controller;
 
-import com.example.zooshopback.model.Category;
+
 import com.example.zooshopback.model.Product;
-import com.example.zooshopback.postClass.PostProduct;
 import com.example.zooshopback.service.ProductService;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpMessage;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigDecimal;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("api/product")
@@ -38,10 +32,7 @@ public class ProductController {
     @GetMapping("/{id}")
     public ResponseEntity<Product> findById(@PathVariable Long id) {
         log.info("Find product by id: {}", id);
-        Product product = productService.getProduct(id);
-        return product != null ?
-                new ResponseEntity<>(product, HttpStatus.OK)
-                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(productService.getProduct(id), HttpStatus.OK);
     }
 
 //    @PostMapping

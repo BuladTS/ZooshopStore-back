@@ -1,8 +1,8 @@
 package com.example.zooshopback.service;
 
-import com.example.zooshopback.model.Category;
+import com.example.zooshopback.exception.ResourceAlreadyExistsException;
+import com.example.zooshopback.exception.ResourceNotFoundException;
 import com.example.zooshopback.model.Product;
-import com.example.zooshopback.repository.CategoryRepository;
 import com.example.zooshopback.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,11 +14,9 @@ import java.util.Optional;
 public class ProductService {
 
     private final ProductRepository productRepository;
-    private final CategoryRepository categoryRepository;
 
     @Autowired
-    public ProductService(ProductRepository productRepository, CategoryRepository categoryRepository) {
-        this.categoryRepository = categoryRepository;
+    public ProductService(ProductRepository productRepository) {
         this.productRepository = productRepository;
     }
 
@@ -27,20 +25,17 @@ public class ProductService {
     }
 
     public Product getProduct(Long id) {
-        Optional<Product> product =  productRepository.findById(id);
-        return product.orElse(null);
+        return productRepository.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException("Product not found with id " + id)
+        );
     }
 
     public Product createProduct(Product product) {
         Optional<Product> productOptional = productRepository.findByName(product.getName());
         if (productOptional.isPresent())
-            throw new IllegalArgumentException("Product already exists");
+            throw new ResourceAlreadyExistsException("Product already exists with name " + product.getName());
         productRepository.save(product);
         return product;
     }
 
-    public Category getCategory(Long id) {
-        Optional<Category> category = categoryRepository.findById(id);
-        return category.orElse(null);
-    }
 }
