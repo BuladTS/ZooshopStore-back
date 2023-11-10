@@ -30,6 +30,30 @@ public class CategoryService {
         );
     }
 
+    public Category deleteCategory(Long id) {
+        Optional<Category> categoryOptional = categoryRepository.findById(id);
+        if (categoryOptional.isEmpty())
+            throw new ResourceNotFoundException("Could not find category with id: " + id);
+        categoryRepository.delete(categoryOptional.get());
+        return categoryOptional.get();
+    }
+
+    public Category updateCategory(Long id, Category category) {
+        Optional<Category> categoryOptional = categoryRepository.findById(id);
+        if (categoryOptional.isEmpty())
+            throw new ResourceNotFoundException("Could not find category with id: " + id);
+        Optional<Category> categoryOptionalFindByName = categoryRepository.findByName(category.getName());
+        if (categoryOptionalFindByName.isPresent())
+            throw new ResourceAlreadyExistsException("Category with name: " + category.getName() + " already exists");
+
+        Category categoryFromDataBase = categoryOptional.get();
+        if (category.getName() != null && !category.getName().isEmpty()) {
+            categoryFromDataBase.setName(category.getName());
+            categoryFromDataBase.setSlug(category.getSlug());
+        }
+        return categoryFromDataBase;
+    }
+
     public Category createCategory(Category category) {
         Optional<Category> categoryOptional = categoryRepository.findByName(category.getName());
         if (categoryOptional.isPresent())

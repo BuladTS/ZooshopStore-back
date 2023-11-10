@@ -44,8 +44,7 @@ public class Product {
     @Column(name = "description", nullable = false, columnDefinition = "text")
     private String description;
 
-    // TODO: Сделать перевод из BigDecimal в money (тип данных postgresql) и обратно
-    @Column(name = "price", nullable = false)
+    @Column(name = "price", nullable = false, columnDefinition = "numeric(9, 2)")
     private BigDecimal price;
 
     @Column(name = "quantity", nullable = false)
@@ -62,6 +61,10 @@ public class Product {
         this.description = description;
         this.price = price;
         this.quantity = quantity;
+    }
+
+    public void addProductImage(ProductImage productImage) {
+        productImageList.add(productImage);
     }
 
     @JsonProperty("category_id")

@@ -3,9 +3,9 @@
   <component name="DatabaseMigrationSettings" lastSelectedDirectory="src\main\resources\db\migration" />
   <component name="PersistenceUnitSettings">
     <persistence-units>
-      <persistence-unit name="Default">
+      <persistence-unit moduleName="zooShop-back" name="Default">
         <packages>
-          <package value="com.example.zooshopback" />
+          <package value="ru.sfu.zooshopback" />
         </packages>
       </persistence-unit>
     </persistence-units>
