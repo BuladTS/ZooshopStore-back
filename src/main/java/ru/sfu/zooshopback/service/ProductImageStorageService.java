@@ -3,17 +3,14 @@ package ru.sfu.zooshopback.service;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import ru.sfu.zooshopback.exception.ResourceAlreadyExistsException;
 import ru.sfu.zooshopback.model.Product;
 import ru.sfu.zooshopback.model.ProductImage;
 import ru.sfu.zooshopback.wrapper.ImageItem;
 
-import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ProductImageStorageService {

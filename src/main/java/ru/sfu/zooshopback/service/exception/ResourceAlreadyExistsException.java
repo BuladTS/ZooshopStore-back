@@ -1,4 +1,4 @@
-package ru.sfu.zooshopback.exception;
+package ru.sfu.zooshopback.service.exception;
 
 public class ResourceAlreadyExistsException extends RuntimeException {
 

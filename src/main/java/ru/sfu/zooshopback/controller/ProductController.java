@@ -1,7 +1,6 @@
 package ru.sfu.zooshopback.controller;
 
 
-import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;
 import ru.sfu.zooshopback.model.Product;
 import ru.sfu.zooshopback.model.ProductImage;
@@ -15,8 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.sfu.zooshopback.wrapper.ImageItem;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 
@@ -50,6 +47,16 @@ public class ProductController {
     public ResponseEntity<Product> findById(@PathVariable Long id) {
         log.info("Find product by id: {}", id);
         return new ResponseEntity<>(productService.getProduct(id), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Product> deleteById(@PathVariable Long id) {
+        return new ResponseEntity<>(productService.deleteProduct(id), HttpStatus.OK);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Product> updateById(@PathVariable Long id, @RequestBody Product product) {
+        return new ResponseEntity<>(productService.updateProduct(id, product), HttpStatus.OK);
     }
 
     @PostMapping("/{id}/product-image")

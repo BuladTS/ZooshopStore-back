@@ -1,8 +1,8 @@
 package ru.sfu.zooshopback.advice;
 
 
-import ru.sfu.zooshopback.exception.ResourceAlreadyExistsException;
-import ru.sfu.zooshopback.exception.ResourceNotFoundException;
+import ru.sfu.zooshopback.service.exception.ResourceAlreadyExistsException;
+import ru.sfu.zooshopback.service.exception.ResourceNotFoundException;
 import ru.sfu.zooshopback.wrapper.AppError;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

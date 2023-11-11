@@ -1,19 +1,16 @@
 package ru.sfu.zooshopback.service;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
-import ru.sfu.zooshopback.exception.ResourceAlreadyExistsException;
-import ru.sfu.zooshopback.exception.ResourceNotFoundException;
+import ru.sfu.zooshopback.service.exception.ResourceAlreadyExistsException;
+import ru.sfu.zooshopback.service.exception.ResourceNotFoundException;
 import ru.sfu.zooshopback.model.Product;
 import ru.sfu.zooshopback.model.ProductImage;
 import ru.sfu.zooshopback.repository.ProductImageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 

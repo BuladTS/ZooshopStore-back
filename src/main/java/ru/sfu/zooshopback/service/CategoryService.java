@@ -1,7 +1,7 @@
 package ru.sfu.zooshopback.service;
 
-import ru.sfu.zooshopback.exception.ResourceAlreadyExistsException;
-import ru.sfu.zooshopback.exception.ResourceNotFoundException;
+import ru.sfu.zooshopback.service.exception.ResourceAlreadyExistsException;
+import ru.sfu.zooshopback.service.exception.ResourceNotFoundException;
 import ru.sfu.zooshopback.model.Category;
 import ru.sfu.zooshopback.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
