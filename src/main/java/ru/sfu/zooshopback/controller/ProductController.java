@@ -2,11 +2,10 @@ package ru.sfu.zooshopback.controller;
 
 
 import org.springframework.web.multipart.MultipartFile;
+import ru.sfu.zooshopback.model.Comment;
 import ru.sfu.zooshopback.model.Product;
 import ru.sfu.zooshopback.model.ProductImage;
-import ru.sfu.zooshopback.service.ProductImageService;
-import ru.sfu.zooshopback.service.ProductImageStorageService;
-import ru.sfu.zooshopback.service.ProductService;
+import ru.sfu.zooshopback.service.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,16 +24,22 @@ public class ProductController {
     private final ProductService productService;
     private final ProductImageService productImageService;
     private final ProductImageStorageService productImageStorageService;
+    private final RatingService ratingService;
+    private final CommentService commentService;
 
     @Autowired
     public ProductController(
             ProductService productService,
             ProductImageService productImageService,
-            ProductImageStorageService productImageStorageService
+            ProductImageStorageService productImageStorageService,
+            RatingService ratingService,
+            CommentService commentService
     ) {
         this.productService = productService;
         this.productImageService = productImageService;
         this.productImageStorageService = productImageStorageService;
+        this.ratingService = ratingService;
+        this.commentService = commentService;
     }
 
     @GetMapping
@@ -74,4 +79,15 @@ public class ProductController {
         return new ResponseEntity<>(imageItems, HttpStatus.OK);
     }
 
+    @GetMapping("/{id}/rating")
+    public ResponseEntity<Double> getProductRating(@PathVariable Long id) {
+        Double rating = ratingService.getProductRating(id);
+        return new ResponseEntity<>(rating, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}/comments")
+    public ResponseEntity<List<Comment>> getAllProductComments(@PathVariable Long id) {
+        List<Comment> comments = commentService.getAllProductComments(id);
+        return new ResponseEntity<>(comments, HttpStatus.OK);
+    }
 }
