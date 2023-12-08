@@ -1,8 +1,7 @@
 package ru.sfu.zooshopback.model;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
@@ -16,10 +15,7 @@ import java.util.Objects;
 @Setter
 @ToString
 @RequiredArgsConstructor
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id"
-)
+@AllArgsConstructor
 public class Category {
 
     @Id
@@ -44,6 +40,12 @@ public class Category {
     private List<PromoCode> promoCodes;
 
     public Category(String name, String slug) {
+        this.name = name;
+        this.slug = slug;
+    }
+
+    public Category(Long id, String name, String slug) {
+        this.id = id;
         this.name = name;
         this.slug = slug;
     }

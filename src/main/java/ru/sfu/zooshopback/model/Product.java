@@ -1,10 +1,9 @@
 package ru.sfu.zooshopback.model;
 
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.OnDelete;
@@ -19,10 +18,6 @@ import java.util.List;
 @Setter
 @ToString
 @NoArgsConstructor
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id"
-)
 public class Product {
 
     @Id
@@ -54,6 +49,15 @@ public class Product {
     @JsonIgnore
     @ToString.Exclude
     private List<ProductImage> productImageList;
+
+    public Product(Long id, Category category, String name, String description, BigDecimal price, Integer quantity) {
+        this.id = id;
+        this.category = category;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.quantity = quantity;
+    }
 
     public Product(Category category, String name, String description, BigDecimal price, Integer quantity) {
         this.category = category;

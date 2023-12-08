@@ -15,7 +15,6 @@ import java.sql.Timestamp;
 @Table(name = "product_images")
 @Data
 @NoArgsConstructor
-
 public class ProductImage {
 
     @Id
@@ -36,6 +35,19 @@ public class ProductImage {
     private String url;
 
     public ProductImage(String name, String url) {
+        this.name = name;
+        this.url = url;
+    }
+
+    public ProductImage(Long id, Product product, String name, String url) {
+        this.id = id;
+        this.product = product;
+        this.name = name;
+        this.url = url;
+    }
+
+    public ProductImage(Long id, String name, String url) {
+        this.id = id;
         this.name = name;
         this.url = url;
     }

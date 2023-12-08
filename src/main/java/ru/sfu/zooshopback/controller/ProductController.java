@@ -1,6 +1,9 @@
 package ru.sfu.zooshopback.controller;
 
 
+import org.springframework.http.MediaType;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.multipart.MultipartFile;
 import ru.sfu.zooshopback.model.Comment;
 import ru.sfu.zooshopback.model.Product;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.sfu.zooshopback.wrapper.ImageItem;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -27,6 +31,8 @@ public class ProductController {
     private final RatingService ratingService;
     private final CommentService commentService;
 
+    private final MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
+
     @Autowired
     public ProductController(
             ProductService productService,
@@ -38,6 +44,7 @@ public class ProductController {
         this.productService = productService;
         this.productImageService = productImageService;
         this.productImageStorageService = productImageStorageService;
+        headers.put("Content-Type", Collections.singletonList(MediaType.APPLICATION_JSON_VALUE));
         this.ratingService = ratingService;
         this.commentService = commentService;
     }
@@ -45,23 +52,23 @@ public class ProductController {
     @GetMapping
     public ResponseEntity<List<Product>> findAll() {
         log.info("Find all products");
-        return new ResponseEntity<>( productService.findAll(), HttpStatus.OK);
+        return new ResponseEntity<>(productService.findAll(), headers, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Product> findById(@PathVariable Long id) {
         log.info("Find product by id: {}", id);
-        return new ResponseEntity<>(productService.getProduct(id), HttpStatus.OK);
+        return new ResponseEntity<>(productService.getProduct(id), headers, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Product> deleteById(@PathVariable Long id) {
-        return new ResponseEntity<>(productService.deleteProduct(id), HttpStatus.OK);
+        return new ResponseEntity<>(productService.deleteProduct(id), headers, HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Product> updateById(@PathVariable Long id, @RequestBody Product product) {
-        return new ResponseEntity<>(productService.updateProduct(id, product), HttpStatus.OK);
+        return new ResponseEntity<>(productService.updateProduct(id, product), headers, HttpStatus.OK);
     }
 
     @PostMapping("/{id}/product-image")
@@ -69,14 +76,14 @@ public class ProductController {
         Product product = productService.getProduct(id);
         ProductImage productImage = productImageStorageService.createImage(multipartFile);
         productImage = productImageService.createProductImage(product, productImage);
-        return new ResponseEntity<>(productImage, HttpStatus.CREATED);
+        return new ResponseEntity<>(productImage, headers, HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}/product-image")
     public ResponseEntity<List<ImageItem>> getAllProductImage(@PathVariable Long id) {
         Product product = productService.getProduct(id);
         List<ImageItem> imageItems = productImageStorageService.getAllProductImages(product);
-        return new ResponseEntity<>(imageItems, HttpStatus.OK);
+        return new ResponseEntity<>(imageItems, headers, HttpStatus.OK);
     }
 
     @GetMapping("/{id}/rating")
