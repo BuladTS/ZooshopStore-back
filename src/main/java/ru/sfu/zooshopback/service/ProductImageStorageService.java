@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import ru.sfu.zooshopback.model.Product;
 import ru.sfu.zooshopback.model.ProductImage;
-import ru.sfu.zooshopback.wrapper.ImageItem;
+import ru.sfu.zooshopback.DTO.ImageItem;
 
 import java.io.FileOutputStream;
 import java.io.IOException;

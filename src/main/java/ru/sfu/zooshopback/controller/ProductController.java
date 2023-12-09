@@ -14,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.sfu.zooshopback.wrapper.ImageItem;
+import ru.sfu.zooshopback.DTO.ImageItem;
 
 import java.io.IOException;
 import java.util.Collections;

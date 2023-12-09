@@ -3,7 +3,7 @@ package ru.sfu.zooshopback.advice;
 
 import ru.sfu.zooshopback.service.exception.ResourceAlreadyExistsException;
 import ru.sfu.zooshopback.service.exception.ResourceNotFoundException;
-import ru.sfu.zooshopback.wrapper.AppError;
+import ru.sfu.zooshopback.DTO.AppError;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

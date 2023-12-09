@@ -23,11 +23,18 @@ public class Category {
     @Column(name = "id", nullable = false)
     private Long id;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "parent_id")
+    private Category parent;
+
     @Column(name = "name", nullable = false, unique = true)
     private String name;
 
     @Column(name = "slug", nullable = false)
     private String slug;
+
+    @Column(name = "description", columnDefinition = "text")
+    private String description;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "category", cascade = CascadeType.ALL)
     @JsonIgnore
@@ -38,6 +45,18 @@ public class Category {
     @JsonIgnore
     @ToString.Exclude
     private List<PromoCode> promoCodes;
+
+    @OneToMany(mappedBy = "parent")
+    @JsonIgnore
+    @ToString.Exclude
+    private List<Category> children;
+
+    @ManyToMany()
+    @JoinTable(name = "category_promocode_ref",
+            joinColumns = {@JoinColumn(name = "category_id")},
+            inverseJoinColumns = {@JoinColumn(name = "promocode_id")})
+    @JsonIgnore
+    private List<PromoCode> promoCodeList;
 
     public Category(String name, String slug) {
         this.name = name;

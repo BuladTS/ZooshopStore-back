@@ -6,7 +6,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockMultipartFile;
@@ -16,7 +15,7 @@ import ru.sfu.zooshopback.model.ProductImage;
 import ru.sfu.zooshopback.service.ProductImageService;
 import ru.sfu.zooshopback.service.ProductImageStorageService;
 import ru.sfu.zooshopback.service.ProductService;
-import ru.sfu.zooshopback.wrapper.ImageItem;
+import ru.sfu.zooshopback.DTO.ImageItem;
 
 import java.io.IOException;
 import java.math.BigDecimal;

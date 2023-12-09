@@ -1,10 +1,14 @@
 package ru.sfu.zooshopback.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+
+import java.util.List;
 
 @Entity
 @Table(name = "promo_codes")
@@ -33,4 +37,13 @@ public class PromoCode {
 
     @Column(name = "active", nullable = false)
     private Boolean active;
+
+//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "promoCode")
+//    @JsonIgnore
+//    @ToString.Exclude
+//    private List<Order> orderList;
+
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "promoCodeList")
+    @JsonIgnore
+    private List<Category> categoryList;
 }

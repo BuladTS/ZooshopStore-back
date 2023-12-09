@@ -1,4 +1,4 @@
-package ru.sfu.zooshopback.wrapper;
+package ru.sfu.zooshopback.DTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
