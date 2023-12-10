@@ -59,18 +59,18 @@ public class SecurityConfig {
                 )
                 .authorizeHttpRequests(
                         auth -> auth
-                                .requestMatchers("/api/auth/**").permitAll()
+//                                .requestMatchers("/api/auth/**").permitAll()
 //                                .requestMatchers("/**").permitAll()
 //                                .requestMatchers("/api/auth/**", "/api/auth/authenticate").permitAll()
-                                .requestMatchers("/api/keys/**").permitAll()
-                                .anyRequest().authenticated()
+//                                .requestMatchers("/api/keys/**").permitAll()
+                                .anyRequest().permitAll()
                 )
                 .sessionManagement(
                         session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
-                .authenticationProvider(authenticationProvider())
-                .addFilterBefore(jwtExceptionHandlerFilter, UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+                .authenticationProvider(authenticationProvider());
+//                .addFilterBefore(jwtExceptionHandlerFilter, UsernamePasswordAuthenticationFilter.class)
+//                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
         return httpSecurity.build();
     }
 
