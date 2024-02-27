@@ -36,3 +36,8 @@ local:
     port: 8080
   upload:
     image: /media/images/
+logging:
+  file:
+    name: application.log
+  level:
+    ru.sfu.zooshopback: DEBUG

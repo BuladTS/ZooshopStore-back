@@ -43,7 +43,10 @@ public class PromoCode {
 //    @ToString.Exclude
 //    private List<Order> orderList;
 
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "promoCodeList")
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "category_promocode_ref",
+            joinColumns = {@JoinColumn(name = "promocode_id")},
+            inverseJoinColumns = {@JoinColumn(name = "category_id")})
     @JsonIgnore
     private List<Category> categoryList;
 }
