@@ -1,5 +1,6 @@
 package ru.sfu.zooshopback.service;
 
+import com.github.slugify.Slugify;
 import ru.sfu.zooshopback.service.exception.ResourceAlreadyExistsException;
 import ru.sfu.zooshopback.service.exception.ResourceNotFoundException;
 import ru.sfu.zooshopback.model.Category;
@@ -12,6 +13,7 @@ import java.util.Optional;
 
 @Service
 public class CategoryService {
+    private final Slugify slg = Slugify.builder().transliterator(true).build();
 
     private final CategoryRepository categoryRepository;
 
@@ -58,6 +60,8 @@ public class CategoryService {
         Optional<Category> categoryOptional = categoryRepository.findByName(category.getName());
         if (categoryOptional.isPresent())
             throw new ResourceAlreadyExistsException("Category already exists with name: " + category.getName());
+        String slug = slg.slugify(category.getName());
+        category.setSlug(slug);
         categoryRepository.save(category);
         return category;
     }

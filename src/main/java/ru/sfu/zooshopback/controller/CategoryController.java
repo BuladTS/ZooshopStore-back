@@ -64,5 +64,4 @@ public class CategoryController {
         product.setCategory(category);
         return new ResponseEntity<>(productService.createProduct(product), headers, HttpStatus.CREATED);
     }
-
 }
