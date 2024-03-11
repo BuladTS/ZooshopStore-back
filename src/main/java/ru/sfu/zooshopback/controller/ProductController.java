@@ -1,6 +1,8 @@
 package ru.sfu.zooshopback.controller;
 
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.MediaType;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -23,6 +25,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api/product")
 @Slf4j
+@Tag(name = "Product controller", description = "Позволяет производить операции с продуктами")
 public class ProductController {
 
     private final ProductService productService;
@@ -49,28 +52,48 @@ public class ProductController {
         this.commentService = commentService;
     }
 
+    @Operation(
+            summary = "Получение всех продуктов",
+            description = "Позволяет получить все продукты"
+    )
     @GetMapping
     public ResponseEntity<List<Product>> findAll() {
         log.info("Find all products");
         return new ResponseEntity<>(productService.findAll(), headers, HttpStatus.OK);
     }
 
+    @Operation(
+            summary = "Получение определенного продукта",
+            description = "Позволяет получить определенный продукт"
+    )
     @GetMapping("/{id}")
     public ResponseEntity<Product> findById(@PathVariable Long id) {
         log.info("Find product by id: {}", id);
         return new ResponseEntity<>(productService.getProduct(id), headers, HttpStatus.OK);
     }
 
+    @Operation(
+            summary = "Удаление определенного продукта",
+            description = "Позволяет удалить определенный продукт"
+    )
     @DeleteMapping("/{id}")
     public ResponseEntity<Product> deleteById(@PathVariable Long id) {
         return new ResponseEntity<>(productService.deleteProduct(id), headers, HttpStatus.OK);
     }
 
+    @Operation(
+            summary = "Изменение определенного продукта",
+            description = "Позволяет изменить определенный продукт"
+    )
     @PutMapping("/{id}")
     public ResponseEntity<Product> updateById(@PathVariable Long id, @RequestBody Product product) {
         return new ResponseEntity<>(productService.updateProduct(id, product), headers, HttpStatus.OK);
     }
 
+    @Operation(
+            summary = "Добавление нового изображения к определенному продукту",
+            description = "Позволяет добавлять новое изображение к определенному продукту"
+    )
     @PostMapping("/{id}/product-image")
     public ResponseEntity<ProductImage> addProductImage(@PathVariable Long id, @RequestParam("file") MultipartFile multipartFile) throws IOException {
         Product product = productService.getProduct(id);
@@ -79,6 +102,10 @@ public class ProductController {
         return new ResponseEntity<>(productImage, headers, HttpStatus.CREATED);
     }
 
+    @Operation(
+            summary = "Получение всех изображений продукта",
+            description = "Позволяет получить все изображения продукта"
+    )
     @GetMapping("/{id}/product-image")
     public ResponseEntity<List<ImageItem>> getAllProductImage(@PathVariable Long id) {
         Product product = productService.getProduct(id);
@@ -86,12 +113,20 @@ public class ProductController {
         return new ResponseEntity<>(imageItems, headers, HttpStatus.OK);
     }
 
+    @Operation(
+            summary = "Получение райтинга продукта",
+            description = "Позволяет получить рейтинг продукта"
+    )
     @GetMapping("/{id}/rating")
     public ResponseEntity<Double> getProductRating(@PathVariable Long id) {
         Double rating = ratingService.getProductRating(id);
         return new ResponseEntity<>(rating, HttpStatus.OK);
     }
 
+    @Operation(
+            summary = "Получение коментариев продукта",
+            description = "Позволяет получить коментарии продукта"
+    )
     @GetMapping("/{id}/comments")
     public ResponseEntity<List<Comment>> getAllProductComments(@PathVariable Long id) {
         List<Comment> comments = commentService.getAllProductComments(id);
