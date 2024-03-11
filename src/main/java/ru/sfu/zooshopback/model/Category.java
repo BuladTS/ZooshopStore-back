@@ -2,6 +2,7 @@ package ru.sfu.zooshopback.model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
@@ -25,6 +26,7 @@ public class Category {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_id")
+    @JsonIgnore
     private Category parent;
 
     @Column(name = "name", nullable = false, unique = true)
@@ -67,6 +69,14 @@ public class Category {
         this.id = id;
         this.name = name;
         this.slug = slug;
+    }
+
+    @JsonProperty("parent_id")
+    public Long getParentId() {
+        if (parent == null) {
+            return null;
+        }
+        return parent.getId();
     }
 
     @Override
